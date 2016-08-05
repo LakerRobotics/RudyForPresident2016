@@ -255,6 +255,11 @@ public class RobotInterfaceMap
 	
 	
 	//Operator Controller Abstraction Methods
+	
+	public boolean GetOperatorButton(int buttonNumber)
+	{
+		return operatorJoystick.getRawButton(buttonNumber);
+	}
 	public boolean GetOperatorX()
 	{
 		return operatorJoystick.getRawButton(operatorButtonX);

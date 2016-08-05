@@ -29,4 +29,53 @@ public class RobotSensorMap
 	{
 		
 	}
+	
+	/*
+	public double getLeftEncoderRate()
+	{
+		if (m_LeftEncoder != null)
+		{
+			return m_LeftEncoder.getRate();
+		}
+		else 
+		{
+			return 0.0;
+		}
+	}
+	public double getRightEncoderRate()
+	{
+		if (m_RightEncoder != null)
+		{
+			return m_RightEncoder.getRate();
+		}
+		else
+		{
+			return 0.0;
+		}
+	}
+	
+	public double getLeftEncoderDistance()
+	{
+		if (m_LeftEncoder != null)
+		{
+			return m_LeftEncoder.getDistance();
+		}
+		else 
+		{
+			return 0.0;
+		}
+	}
+	public double getRightEncoderDistance()
+	{
+		if (m_RightEncoder != null)
+		{
+			return m_RightEncoder.getDistance();
+		}
+		else 
+		{
+			return 0.0;
+		}
+	}
+*/
+
 }

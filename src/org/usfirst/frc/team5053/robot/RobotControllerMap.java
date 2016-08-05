@@ -10,6 +10,9 @@ import edu.wpi.first.wpilibj.Talon;
  * Jaguars,
  * Spikes,
  * Solenoids
+ * 
+ * 
+ * 
  */
 
 
@@ -28,11 +31,11 @@ public class RobotControllerMap
 	private final int exampleMotorPWM = 2;
 	
 	
-	private Talon m_leftDrive;
-	private Talon m_rightDrive;
+	private Talon m_LeftDrive;
+	private Talon m_RightDrive;
 	
 	//Example
-	private Talon m_exampleMotor;
+	private Talon m_ExampleMotor;
 	
 	/**
 	 * Hello There! :3 There's only one constructor.
@@ -40,26 +43,26 @@ public class RobotControllerMap
 	public RobotControllerMap()
 	{
 		
-		m_leftDrive = new Talon(leftDrivePWM);
-		m_rightDrive = new Talon(rightDrivePWM);
+		m_LeftDrive = new Talon(leftDrivePWM);
+		m_RightDrive = new Talon(rightDrivePWM);
 		
 		//Example
-		m_exampleMotor = new Talon(exampleMotorPWM);
+		m_ExampleMotor = new Talon(exampleMotorPWM);
 	}
 	
 	public Talon GetLeftDrive()
 	{
-		return m_leftDrive;
+		return m_LeftDrive;
 	}
 	public Talon GetRightDrive()
 	{
-		return m_rightDrive;
+		return m_RightDrive;
 	}
 	
 	//Example
 	public Talon GetExampleMotor()
 	{
-		return m_exampleMotor;
+		return m_ExampleMotor;
 	}
 	
 	

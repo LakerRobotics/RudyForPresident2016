@@ -24,14 +24,14 @@ public class Robot extends IterativeRobot
 	 */
 	
 	//Robot Map Declaration
-	RobotInterfaceMap m_robotInterface;
-	RobotControllerMap m_robotControllers;
-	RobotSensorMap m_robotSensors;
+	RobotInterfaceMap m_RobotInterface;
+	RobotControllerMap m_RobotControllers;
+	RobotSensorMap m_RobotSensors;
 	
 	
 	
 	//Robot Subsystem Declaration
-	DriveTrain m_driveTrain;
+	DriveTrain m_DriveTrain;
 	
 
     public void robotInit()
@@ -41,16 +41,16 @@ public class Robot extends IterativeRobot
          * used for any initialization code.
          */
     	
-    	m_robotInterface = new RobotInterfaceMap(joystickType.XBOX, joystickType.XBOX);
+    	m_RobotInterface = new RobotInterfaceMap(joystickType.XBOX, joystickType.XBOX);
     	//m_robotInterface = new RobotInterfaceMap();
     	
-    	m_robotControllers = new RobotControllerMap();
-    	m_robotSensors = new RobotSensorMap();
+    	m_RobotControllers = new RobotControllerMap();
+    	m_RobotSensors = new RobotSensorMap();
     	
     	
     	
     	//Robot Subsystem Initialization
-    	m_driveTrain = new DriveTrain(m_robotControllers.GetLeftDrive(), m_robotControllers.GetRightDrive());
+    	m_DriveTrain = new DriveTrain(m_RobotControllers.GetLeftDrive(), m_RobotControllers.GetRightDrive());
     }
 
     public void autonomousInit() 
@@ -74,24 +74,25 @@ public class Robot extends IterativeRobot
         /**
          * This function is called periodically during operator control
          */
-    	m_driveTrain.arcadeDrive(m_robotInterface.GetDriverJoystick());
+    	m_DriveTrain.arcadeDrive(m_RobotInterface.GetDriverJoystick());
     	
     	
     	
     	//Example Button Functionality
     	//Spin a motor while a button is pressed.
     	//In this case, while the A button on the driver controller is held down.
-    	if (m_robotInterface.GetDriverA())
+    	if (m_RobotInterface.GetDriverA())
     	{
-    		spinMotor(m_robotControllers.GetExampleMotor(), 0.5);
+    		spinMotor(m_RobotControllers.GetExampleMotor(), 0.5);
     	} 
     	else
     	{
-    		stopMotor(m_robotControllers.GetExampleMotor());
+    		stopMotor(m_RobotControllers.GetExampleMotor());
     	}
     	
     	//Update Dashboard Variables
     	UpdateSmartDashboard();
+    	
     	
     }
 
@@ -114,13 +115,15 @@ public class Robot extends IterativeRobot
     }
     public void UpdateSmartDashboard()
     {
+    	/* Not Implemented Yet
     	//Encoder Rates
-    	SmartDashboard.putNumber("Left Encoder Rate", m_driveTrain.getLeftEncoderRate());
-    	SmartDashboard.putNumber("Right Encoder Rate", m_driveTrain.getRightEncoderRate());
+    	SmartDashboard.putNumber("Left Encoder Rate", m_RobotSensors.getLeftEncoderRate());
+    	SmartDashboard.putNumber("Right Encoder Rate", m_RobotSensors.getRightEncoderRate());
     	
     	//Encoder Distance
-    	SmartDashboard.putNumber("Left Encoder Distance", m_driveTrain.getLeftEncoderDistance());
-    	SmartDashboard.putNumber("Right Encoder Distance", m_driveTrain.getRightEncoderDistance());
+    	SmartDashboard.putNumber("Left Encoder Distance", m_RobotSensors.getLeftEncoderDistance());
+    	SmartDashboard.putNumber("Right Encoder Distance", m_RobotSensors.getRightEncoderDistance());
+    	*/
     }
     
 }
