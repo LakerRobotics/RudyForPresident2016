@@ -37,6 +37,10 @@ public class DriveTrain extends RobotDrive
 		m_LeftEncoder = leftEncoder;
 		m_RightEncoder = rightEncoder;
 		
+		
+		m_LeftMotor.setInverted(true);
+		m_RightMotor.setInverted(true);
+		
 	}
 
 }
