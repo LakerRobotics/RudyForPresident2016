@@ -23,7 +23,7 @@ public class RobotSensorMap
 	 */
 	
 	/**
-	 * Hello There! :3 There's only one constructor.
+	 * Hello There! :þ There's only one constructor.
 	 */
 	public RobotSensorMap()
 	{
