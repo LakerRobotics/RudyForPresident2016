@@ -47,7 +47,11 @@ public class RobotSensorMap
 	
 	
 	/**
+<<<<<<< HEAD
 	 * Hello There! :3c There's only one constructor.
+=======
+	 * Hello There! :þ There's only one constructor.
+>>>>>>> refs/remotes/origin/master
 	 */
 	public RobotSensorMap()
 	{

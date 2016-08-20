@@ -52,7 +52,7 @@ public class RobotControllerMap
 	private Talon m_ExampleMotor;
 	
 	/**
-	 * Hello There! :3 There's only one constructor.
+	 * Hello There! :þ There's only one constructor.
 	 */
 	public RobotControllerMap()
 	{

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 public class DriveTrain extends RobotDrive implements Subsystem
 {
 	/**
-	 * Hello There! :3 There's only one constructor.
+	 * Hello There! :þ I'm the base constructor.
 	 */
 	
 	private SpeedController m_LeftMotor;
