@@ -13,7 +13,7 @@ public class Arm implements Subsystem {
 	public Arm(Talon armTalon, AnalogPotentiometer armStringPot) {
 		m_Arm = armTalon;
 		m_StringPot = armStringPot;
-		m_PID = new PIDController(.1, 0, 0, m_StringPot, m_Arm);
+		m_PID = new PIDController(40.0, 4.0, 0.0, m_StringPot, m_Arm);
 	}
 	
 	public void EnablePID() {

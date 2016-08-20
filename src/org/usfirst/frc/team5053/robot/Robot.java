@@ -4,6 +4,11 @@ package org.usfirst.frc.team5053.robot;
 import org.usfirst.frc.team5053.robot.RobotInterfaceMap.joystickType;
 import org.usfirst.frc.team5053.robot.Subsystems.Arm;
 import org.usfirst.frc.team5053.robot.Subsystems.DriveTrain;
+import org.usfirst.frc.team5053.robot.Subsystems.Intake;
+import org.usfirst.frc.team5053.robot.Subsystems.Kicker;
+import org.usfirst.frc.team5053.robot.Subsystems.LeftShooter;
+import org.usfirst.frc.team5053.robot.Subsystems.RightShooter;
+import org.usfirst.frc.team5053.robot.Subsystems.ShooterAim;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -34,7 +39,11 @@ public class Robot extends IterativeRobot
 	//Robot Subsystem Declaration
 	DriveTrain m_DriveTrain;
 	Arm m_Arm;
-	
+	LeftShooter m_LeftShooter;
+	RightShooter m_RightShooter;
+	Intake m_Intake;
+	ShooterAim m_ShooterAim;
+	Kicker m_Kicker;
 
     public void robotInit()
     {
@@ -53,7 +62,12 @@ public class Robot extends IterativeRobot
     	
     	//Robot Subsystem Initialization
     	m_DriveTrain = new DriveTrain(m_RobotControllers.GetLeftDrive(), m_RobotControllers.GetRightDrive());
-    	//m_Arm = new Arm(m_RobotControllers.GetArm(), m_RobotSensors.)
+    	m_Arm = new Arm(m_RobotControllers.GetArm(), m_RobotSensors.GetArmPot());
+    	m_LeftShooter = new LeftShooter(m_RobotControllers.GetLeftShooter(), m_RobotSensors.GetLeftShooterEncoder());
+    	m_RightShooter = new RightShooter(m_RobotControllers.GetRightShooter(), m_RobotSensors.GetRightShooterEncoder());
+    	m_Intake = new Intake(m_RobotControllers.GetIntake());
+    	m_ShooterAim = new ShooterAim(m_RobotControllers.GetShooterBattery(), m_RobotSensors.GetShooterHigh(), m_RobotSensors.GetShooterLow());
+    	m_Kicker = new Kicker(m_RobotSensors.GetKickerSolenoid());
     }
 
     public void autonomousInit() 

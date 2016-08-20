@@ -43,7 +43,7 @@ public class RobotSensorMap
 	private DigitalInput m_ShooterLow;
 	
 	private Solenoid m_Kicker;
-	private AnalogPotentiometer m_Arm;
+	private AnalogPotentiometer m_ArmPot;
 	
 	
 	/**
@@ -64,10 +64,34 @@ public class RobotSensorMap
 		m_ShooterLow = new DigitalInput(shooterLimitSwitchLowDIO);
 		
 		m_Kicker = new Solenoid(solenoidKicker);
-		m_Arm = new AnalogPotentiometer(armStringPotentiometerAnalog);
+		m_ArmPot = new AnalogPotentiometer(armStringPotentiometerAnalog);
 		
 	}
 	
+	public Encoder GetLeftDriveEncoder() {
+		return m_LeftDrive;
+	}
+	public Encoder GetRightDriveEncoder() {
+		return m_RightDrive;
+		}
+	public Encoder GetLeftShooterEncoder() {
+		return m_LeftShooter;
+	}
+	public Encoder GetRightShooterEncoder() {
+		return m_RightShooter;
+	}
+	public DigitalInput GetShooterHigh() {
+		return m_ShooterHigh;
+	}
+	public DigitalInput GetShooterLow() {
+		return m_ShooterLow;
+	}
+	public Solenoid GetKickerSolenoid() {
+		return m_Kicker;
+	}
+	public AnalogPotentiometer GetArmPot() {
+		return m_ArmPot;
+	}
 	/*
 	public double getLeftEncoderRate()
 	{
