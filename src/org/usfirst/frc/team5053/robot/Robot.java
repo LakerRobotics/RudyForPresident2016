@@ -41,8 +41,8 @@ public class Robot extends IterativeRobot
          * used for any initialization code.
          */
     	
-    	//m_RobotInterface = new RobotInterfaceMap(joystickType.XBOX, joystickType.XBOX);
-    	m_RobotInterface = new RobotInterfaceMap();
+    	m_RobotInterface = new RobotInterfaceMap(joystickType.XBOX, null);
+    	//m_RobotInterface = new RobotInterfaceMap();
     	
     	m_RobotControllers = new RobotControllerMap();
     	m_RobotSensors = new RobotSensorMap();
@@ -111,7 +111,7 @@ public class Robot extends IterativeRobot
     }
     public void stopMotor(SpeedController motor)
     {
-    	motor.stopMotor();
+    	motor.set(0);
     }
     public void UpdateSmartDashboard()
     {
