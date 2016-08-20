@@ -2,6 +2,7 @@
 package org.usfirst.frc.team5053.robot;
 
 import org.usfirst.frc.team5053.robot.RobotInterfaceMap.joystickType;
+import org.usfirst.frc.team5053.robot.Subsystems.Arm;
 import org.usfirst.frc.team5053.robot.Subsystems.DriveTrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -32,6 +33,7 @@ public class Robot extends IterativeRobot
 	
 	//Robot Subsystem Declaration
 	DriveTrain m_DriveTrain;
+	Arm m_Arm;
 	
 
     public void robotInit()
@@ -51,6 +53,7 @@ public class Robot extends IterativeRobot
     	
     	//Robot Subsystem Initialization
     	m_DriveTrain = new DriveTrain(m_RobotControllers.GetLeftDrive(), m_RobotControllers.GetRightDrive());
+    	//m_Arm = new Arm(m_RobotControllers.GetArm(), m_RobotSensors.)
     }
 
     public void autonomousInit() 
