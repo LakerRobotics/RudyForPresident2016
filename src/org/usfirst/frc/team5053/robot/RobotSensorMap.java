@@ -1,5 +1,10 @@
 package org.usfirst.frc.team5053.robot;
 
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.Solenoid;
+
 /**
  * Maps all of the sensors on the robot.
  * These include but are not limited to the following:
@@ -15,18 +20,51 @@ package org.usfirst.frc.team5053.robot;
 
 public class RobotSensorMap
 {
-
-	/*
-	 * Weird, there's nothing here
-	 * . . .
-	 * Yet . . .
-	 */
+	
+	private final int leftDriveEncoderADIO = 0;
+	private final int leftDriveEncoderBDIO = 1;
+	private final int rightDriveEncoderADIO = 2;
+	private final int rightDriveEncoderBDIO = 3;
+	private final int leftShooterEncoderADIO = 4;
+	private final int leftShooterEncoderBDIO = 5;
+	private final int rightShooterEncoderADIO = 6;
+	private final int rightShooterEncoderBDIO = 7;
+	private final int shooterLimitSwitchHighDIO = 8;
+	private final int shooterLimitSwitchLowDIO = 9;
+	
+	private final int solenoidKicker = 0;
+	private final int armStringPotentiometerAnalog = 1;
+	
+	private Encoder m_LeftDrive;
+	private Encoder m_RightDrive;
+	private Encoder m_LeftShooter;
+	private Encoder m_RightShooter;
+	private DigitalInput m_ShooterHigh;
+	private DigitalInput m_ShooterLow;
+	
+	private Solenoid m_Kicker;
+	private AnalogPotentiometer m_Arm;
+	
 	
 	/**
+<<<<<<< HEAD
+	 * Hello There! :3c There's only one constructor.
+=======
 	 * Hello There! :þ There's only one constructor.
+>>>>>>> refs/remotes/origin/master
 	 */
 	public RobotSensorMap()
 	{
+		m_LeftDrive = new Encoder(leftDriveEncoderADIO, leftDriveEncoderBDIO);
+		m_RightDrive = new Encoder(rightDriveEncoderADIO, rightDriveEncoderBDIO);
+		m_LeftShooter = new Encoder(leftShooterEncoderADIO, leftShooterEncoderBDIO);
+		m_RightShooter = new Encoder(rightShooterEncoderADIO, rightShooterEncoderBDIO);
+		
+		m_ShooterHigh = new DigitalInput(shooterLimitSwitchHighDIO);
+		m_ShooterLow = new DigitalInput(shooterLimitSwitchLowDIO);
+		
+		m_Kicker = new Solenoid(solenoidKicker);
+		m_Arm = new AnalogPotentiometer(armStringPotentiometerAnalog);
 		
 	}
 	

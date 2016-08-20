@@ -26,6 +26,9 @@ public class DriveTrain extends RobotDrive implements Subsystem
 		super(leftMotor, rightMotor);
 		m_LeftMotor = leftMotor;
 		m_RightMotor = rightMotor;
+		
+		m_LeftMotor.setInverted(true);
+		m_RightMotor.setInverted(true);
 	}
 	public DriveTrain(SpeedController leftMotor, SpeedController rightMotor, Encoder leftEncoder, Encoder rightEncoder)
 	{
