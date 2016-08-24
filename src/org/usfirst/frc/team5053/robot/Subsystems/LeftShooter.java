@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5053.robot.Subsystems;
 
+import java.util.HashMap;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Talon;
@@ -27,5 +29,9 @@ public class LeftShooter implements Subsystem{
 	}
 	public void SetShooterSetpoint(double speed) {
 		m_PID.setSetpoint(speed);
+	}
+	public HashMap<String, Double> GetDashboardData() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

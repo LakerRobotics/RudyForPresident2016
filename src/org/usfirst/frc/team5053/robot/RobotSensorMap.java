@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5053.robot;
 
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
@@ -44,7 +45,7 @@ public class RobotSensorMap
 	
 	private Solenoid m_Kicker;
 	private AnalogPotentiometer m_ArmPot;
-	
+	private ADXRS450_Gyro m_Gyro;
 	
 	/**
 <<<<<<< HEAD
@@ -65,7 +66,7 @@ public class RobotSensorMap
 		
 		m_Kicker = new Solenoid(solenoidKicker);
 		m_ArmPot = new AnalogPotentiometer(armStringPotentiometerAnalog);
-		
+		m_Gyro = new ADXRS450_Gyro();
 	}
 	
 	public Encoder GetLeftDriveEncoder() {
@@ -91,6 +92,9 @@ public class RobotSensorMap
 	}
 	public AnalogPotentiometer GetArmPot() {
 		return m_ArmPot;
+	}
+	public ADXRS450_Gyro GetGyro() {
+		return m_Gyro;
 	}
 	/*
 	public double getLeftEncoderRate()

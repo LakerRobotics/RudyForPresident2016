@@ -11,6 +11,7 @@ import org.usfirst.frc.team5053.robot.Subsystems.RightShooter;
 import org.usfirst.frc.team5053.robot.Subsystems.ShooterAim;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -92,7 +93,7 @@ public class Robot extends IterativeRobot
          * This function is called periodically during operator control
          */
     	m_DriveTrain.arcadeDrive(m_RobotInterface.GetDriverJoystick());
-    	
+    	ManualArmControl();
     	
     	
     	//Example Button Functionality
@@ -130,8 +131,13 @@ public class Robot extends IterativeRobot
     {
     	motor.set(0);
     }
+    public void ManualArmControl() 
+    {
+    	m_Arm.SetTalonOutput(m_RobotInterface.GetOperatorJoystick().getRawAxis(0));
+    }
     public void UpdateSmartDashboard()
     {
+    	SmartDashboard.putNumber("ArmPot", m_Arm.GetDashboardData().get("ArmPot"));
     	/* Not Implemented Yet
     	//Encoder Rates
     	SmartDashboard.putNumber("Left Encoder Rate", m_RobotSensors.getLeftEncoderRate());
@@ -142,5 +148,4 @@ public class Robot extends IterativeRobot
     	SmartDashboard.putNumber("Right Encoder Distance", m_RobotSensors.getRightEncoderDistance());
     	*/
     }
-    
 }

@@ -1,9 +1,11 @@
 package org.usfirst.frc.team5053.robot.Subsystems;
 
+import java.util.HashMap;
+
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Talon;
 
-public class ShooterAim {
+public class ShooterAim implements Subsystem{
 
 	private Talon m_ShooterAim;
 	private DigitalInput m_ShooterHigh;
@@ -23,5 +25,9 @@ public class ShooterAim {
 	}
 	public void SetTalonOutput(double speed) {
 		m_ShooterAim.set(speed);
+	}
+	public HashMap<String, Double> GetDashboardData() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
