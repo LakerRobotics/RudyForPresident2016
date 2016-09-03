@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5053.robot.Subsystems;
 
+import java.util.HashMap;
+
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.Talon;
@@ -26,9 +28,17 @@ public class Arm implements Subsystem {
 		return m_StringPot.get();
 	}
 	public void SetTargetPosition(double target) {
+		if(target < 0)
 		m_PID.setSetpoint(target);
 	}
 	public void SetTalonOutput(double speed) { 
 		m_Arm.set(speed);
 	}
+	public HashMap<String, Double> GetDashboardData() {
+		HashMap<String, Double> data = new HashMap<String, Double>();
+		data.put("ArmPot", GetPosition());
+		return data;
+	}
+	
+	
 }

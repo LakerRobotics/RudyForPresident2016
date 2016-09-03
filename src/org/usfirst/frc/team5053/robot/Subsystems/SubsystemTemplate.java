@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5053.robot.Subsystems;
 
+import java.util.HashMap;
+
 import edu.wpi.first.wpilibj.Talon;
 
 /**
@@ -49,5 +51,11 @@ public class SubsystemTemplate implements Subsystem
 	{
 		
 		return m_SubsystemMotor.getSpeed();
+	}
+
+	@Override
+	public HashMap<String, Double> GetDashboardData() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
