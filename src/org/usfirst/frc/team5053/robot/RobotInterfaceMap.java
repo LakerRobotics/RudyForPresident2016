@@ -21,7 +21,8 @@ public class RobotInterfaceMap
 	public enum joystickType
 	{
 		LOGITECHGAMEPAD,
-		XBOX
+		XBOX,
+		JOYSTICK
 	}
 	private final int driverJoystickSlot = 0;
 	private final int operatorJoystickSlot = 1;

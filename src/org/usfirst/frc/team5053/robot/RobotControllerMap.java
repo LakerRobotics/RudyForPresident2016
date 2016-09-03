@@ -32,9 +32,6 @@ public class RobotControllerMap
 	private final int armPWM = 5;
 	private final int shooterBatteryPWM = 6;
 	
-	//Example
-	private final int exampleMotorPWM = 2;
-	
 	
 	private Talon m_LeftDrive;
 	private Talon m_RightDrive;
@@ -47,12 +44,10 @@ public class RobotControllerMap
 	private Talon m_Intake;
 	
 	private Talon m_ShooterBattery;
-	
-	//Example
-	private Talon m_ExampleMotor;
+
 	
 	/**
-	 * Hello There! :þ There's only one constructor.
+	 * 
 	 */
 	public RobotControllerMap()
 	{
@@ -69,8 +64,6 @@ public class RobotControllerMap
 		
 		m_ShooterBattery = new Talon(shooterBatteryPWM);
 		
-		//Example
-		m_ExampleMotor = new Talon(exampleMotorPWM);
 	}
 	
 	public Talon GetLeftDrive()
@@ -101,13 +94,5 @@ public class RobotControllerMap
 	{
 		return m_ShooterBattery;
 	}
-	
-	//Example
-	public Talon GetExampleMotor()
-	{
-		return m_ExampleMotor;
-	}
-	
-	
 	
 }

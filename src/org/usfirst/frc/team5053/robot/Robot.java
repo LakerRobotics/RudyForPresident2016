@@ -53,7 +53,7 @@ public class Robot extends IterativeRobot
          * used for any initialization code.
          */
     	
-    	m_RobotInterface = new RobotInterfaceMap(joystickType.XBOX, null);
+    	m_RobotInterface = new RobotInterfaceMap(joystickType.XBOX, joystickType.JOYSTICK);
     	//m_RobotInterface = new RobotInterfaceMap();
     	
     	m_RobotControllers = new RobotControllerMap();
@@ -99,14 +99,14 @@ public class Robot extends IterativeRobot
     	//Example Button Functionality
     	//Spin a motor while a button is pressed.
     	//In this case, while the A button on the driver controller is held down.
-    	if (m_RobotInterface.GetDriverA())
+    	/*if (m_RobotInterface.GetDriverA())
     	{
     		spinMotor(m_RobotControllers.GetExampleMotor(), 0.5);
     	} 
     	else
     	{
     		stopMotor(m_RobotControllers.GetExampleMotor());
-    	}
+    	}*/
     	
     	//Update Dashboard Variables
     	UpdateSmartDashboard();
@@ -134,6 +134,10 @@ public class Robot extends IterativeRobot
     public void ManualArmControl() 
     {
     	m_Arm.SetTalonOutput(m_RobotInterface.GetOperatorJoystick().getRawAxis(0));
+    }
+    public void ArcadeDrive()
+    {
+    	m_DriveTrain.arcadeDrive(m_RobotInterface.GetDriverLeftY(), m_RobotInterface.GetDriverRightX());
     }
     public void UpdateSmartDashboard()
     {
