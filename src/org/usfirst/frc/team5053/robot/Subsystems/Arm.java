@@ -15,21 +15,32 @@ public class Arm implements Subsystem {
 	public Arm(Talon armTalon, AnalogPotentiometer armStringPot) {
 		m_Arm = armTalon;
 		m_StringPot = armStringPot;
-		m_PID = new PIDController(40.0, 4.0, 0.0, m_StringPot, m_Arm);
+		m_PID = new PIDController(15.0, 0.05, 0.0, m_StringPot, m_Arm);
 	}
 	
 	public void EnablePID() {
-		m_PID.enable();
+		if(!m_PID.isEnabled())
+		{
+			m_PID.enable();
+		}
 	}
 	public void DisablePID() {
-		m_PID.disable();
+		if(m_PID.isEnabled())
+		{
+			m_PID.disable();
+		}
+	}
+	public boolean isPIDEnabled() {
+		return m_PID.isEnabled();
 	}
 	public double GetPosition() {
 		return m_StringPot.get();
 	}
 	public void SetTargetPosition(double target) {
-		if(target < 0)
-		m_PID.setSetpoint(target);
+		if(target < .353 && target > .179)
+		{
+			m_PID.setSetpoint(target);
+		}
 	}
 	public void SetTalonOutput(double speed) { 
 		m_Arm.set(speed);

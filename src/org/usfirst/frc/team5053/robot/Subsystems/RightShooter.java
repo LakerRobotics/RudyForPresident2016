@@ -24,11 +24,17 @@ public class RightShooter implements Subsystem{
 	public void DisablePID() {
 		m_PID.disable();
 	}
+	public boolean isPIDEnabled() {
+		return m_PID.isEnabled();
+	}
 	public boolean ShooterOnTarget() {
 		return m_PID.onTarget();
 	}
 	public void SetShooterSetpoint(double speed) {
 		m_PID.setSetpoint(speed);
+	}
+	public void SetTalonOutput(double speed) {
+		m_Shooter.set(speed);
 	}
 	public HashMap<String, Double> GetDashboardData() {
 		// TODO Auto-generated method stub

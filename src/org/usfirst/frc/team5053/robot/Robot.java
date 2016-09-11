@@ -11,7 +11,6 @@ import org.usfirst.frc.team5053.robot.Subsystems.RightShooter;
 import org.usfirst.frc.team5053.robot.Subsystems.ShooterAim;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -45,6 +44,22 @@ public class Robot extends IterativeRobot
 	Intake m_Intake;
 	ShooterAim m_ShooterAim;
 	Kicker m_Kicker;
+	
+	//Arm setpoints
+	final double ARM_NEUTRAL	= 0.209;
+	final double ARM_AUTO		= 0.300;
+	final double ARM_BALL		= 0.327;
+	final double ARM_LOW		= 0.352;
+	
+	//Intake speeds
+	final double INTAKE_FAST	= -2000;
+	final double INTAKE_SLOW	= -1500;
+	final double INTAKE_REVERSE = 2000;
+	
+	//Shooter speeds
+	final double SHOOTER_FAST	= 2000;
+	final double SHOOTER_SLOW	= 1500;
+	final double SHOOTER_INTAKE	= -2000;
 
     public void robotInit()
     {
@@ -92,21 +107,23 @@ public class Robot extends IterativeRobot
         /**
          * This function is called periodically during operator control
          */
-    	m_DriveTrain.arcadeDrive(m_RobotInterface.GetDriverJoystick());
-    	ManualArmControl();
+    	ArcadeDrive();
     	
-    	
-    	//Example Button Functionality
-    	//Spin a motor while a button is pressed.
-    	//In this case, while the A button on the driver controller is held down.
-    	/*if (m_RobotInterface.GetDriverA())
+    	//Arm
+    	if(m_RobotInterface.GetOperatorButton(1))
     	{
-    		spinMotor(m_RobotControllers.GetExampleMotor(), 0.5);
-    	} 
+    		ManualArmControl();
+    	}
     	else
     	{
-    		stopMotor(m_RobotControllers.GetExampleMotor());
-    	}*/
+    		ArmSetpoints();
+    	}
+
+    	//Intake
+    	Intake();
+    	
+    	//Shooter
+    	
     	
     	//Update Dashboard Variables
     	UpdateSmartDashboard();
@@ -121,23 +138,145 @@ public class Robot extends IterativeRobot
          * This function is called periodically during test mode
          */
     }
-    
-    //Begin Laker Robotics Custom Methods
-    public void spinMotor(SpeedController motor, double speed)
-    {
-    	motor.set(speed);
-    }
-    public void stopMotor(SpeedController motor)
-    {
-    	motor.set(0);
-    }
-    public void ManualArmControl() 
-    {
-    	m_Arm.SetTalonOutput(m_RobotInterface.GetOperatorJoystick().getRawAxis(0));
-    }
+    //Drivetrain
     public void ArcadeDrive()
     {
     	m_DriveTrain.arcadeDrive(m_RobotInterface.GetDriverLeftY(), m_RobotInterface.GetDriverRightX());
+    }
+    
+    //Arm
+    public void ManualArmControl() 
+    {
+    	m_Arm.DisablePID();
+        m_Arm.SetTalonOutput(-m_RobotInterface.GetOperatorJoystick().getRawAxis(1));
+    }
+    public void ArmSetpoints() 
+    {	
+    	if(!m_Arm.isPIDEnabled())
+    	{
+    		m_Arm.SetTalonOutput(0);
+    	}
+    	
+    	if(m_RobotInterface.GetOperatorButton(7))
+    	{
+        	m_Arm.EnablePID();
+    		m_Arm.SetTargetPosition(ARM_NEUTRAL);
+    	}
+    	else if(m_RobotInterface.GetOperatorButton(9))
+    	{
+    		m_Arm.EnablePID();
+    		m_Arm.SetTargetPosition(ARM_BALL);
+    	}
+    	else if(m_RobotInterface.GetOperatorButton(11))
+    	{
+    		m_Arm.EnablePID();
+    		m_Arm.SetTargetPosition(ARM_LOW);
+    	}
+    }
+    
+    //Intake
+    public void Intake()
+    {
+	    if(m_RobotInterface.GetOperatorButton(8))
+		{
+			m_Intake.SetTalonOutput(INTAKE_FAST);
+
+			m_LeftShooter.DisablePID();
+			m_LeftShooter.SetTalonOutput(SHOOTER_INTAKE);
+			
+			m_RightShooter.DisablePID();
+			m_RightShooter.SetTalonOutput(SHOOTER_INTAKE);
+		}
+		else if(m_RobotInterface.GetOperatorButton(10))
+		{
+			m_Intake.SetTalonOutput(INTAKE_SLOW);
+			
+			m_LeftShooter.DisablePID();
+			m_LeftShooter.SetTalonOutput(SHOOTER_INTAKE);
+			
+			m_RightShooter.DisablePID();
+			m_RightShooter.SetTalonOutput(SHOOTER_INTAKE);
+		}
+		else if(m_RobotInterface.GetOperatorButton(12))
+		{
+			m_Intake.SetTalonOutput(INTAKE_REVERSE);
+
+			m_LeftShooter.DisablePID();
+			m_LeftShooter.SetTalonOutput(SHOOTER_INTAKE);
+			
+			m_RightShooter.DisablePID();
+			m_RightShooter.SetTalonOutput(SHOOTER_INTAKE);
+		}
+		else
+		{
+			m_Intake.SetTalonOutput(0);
+			
+			if(!m_LeftShooter.isPIDEnabled() && !m_RightShooter.isPIDEnabled())
+			{
+				m_LeftShooter.SetTalonOutput(0);
+				m_RightShooter.SetTalonOutput(0);
+			}
+		}
+    }
+    
+    //Shooter
+    public void ShootFast()
+    {
+    	if(m_RobotInterface.GetOperatorButton(3))
+    	{
+    	   	m_LeftShooter.EnablePID();
+        	m_RightShooter.EnablePID();
+        	m_LeftShooter.SetShooterSetpoint(SHOOTER_FAST);
+        	m_RightShooter.SetShooterSetpoint(SHOOTER_FAST);
+        	if(m_LeftShooter.ShooterOnTarget() && m_RightShooter.ShooterOnTarget())
+        	{
+        		m_Kicker.SetSolenoidState(true);
+        	}
+    	}
+    	else if(m_RobotInterface.GetOperatorButton(4))
+    	{
+    		m_LeftShooter.EnablePID();
+        	m_RightShooter.EnablePID();
+        	m_LeftShooter.SetShooterSetpoint(SHOOTER_SLOW);
+        	m_RightShooter.SetShooterSetpoint(SHOOTER_SLOW);
+        	if(m_LeftShooter.ShooterOnTarget() && m_RightShooter.ShooterOnTarget())
+        	{
+        		m_Kicker.SetSolenoidState(true);
+        	}
+    	}
+    	else
+    	{
+    		m_LeftShooter.SetTalonOutput(0);
+    		m_RightShooter.SetTalonOutput(0);
+    	}
+    }
+    
+    //Shoot aim | this code uses limit switches may want to revisit this and use PID control
+    public void ShooterAim()
+    {
+    	boolean buttonPressed = false;
+    	
+    	while(m_RobotInterface.GetOperatorButton(12) || buttonPressed) {
+    		buttonPressed = true;
+    		if(m_ShooterAim.LimitSwitchLow())
+    		{
+    			m_ShooterAim.SetTalonOutput(.6);
+    			if(m_ShooterAim.LimitSwitchHigh()) 
+    			{
+    				m_ShooterAim.SetTalonOutput(0);
+    				buttonPressed = false;
+    			}
+    		}
+    		else if(m_ShooterAim.LimitSwitchHigh()) 
+    		{
+    			m_ShooterAim.SetTalonOutput(-.6);
+    			if(m_ShooterAim.LimitSwitchLow()) 
+    			{
+    				m_ShooterAim.SetTalonOutput(0);
+    				buttonPressed = false;
+    			}
+    		}
+    	}
     }
     public void UpdateSmartDashboard()
     {
