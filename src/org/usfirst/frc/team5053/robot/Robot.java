@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team5053.robot;
 
 import org.usfirst.frc.team5053.robot.RobotInterfaceMap.joystickType;
@@ -54,12 +53,12 @@ public class Robot extends IterativeRobot
 	//Intake speeds
 	final double INTAKE_FAST	= -2000;
 	final double INTAKE_SLOW	= -1500;
-	final double INTAKE_REVERSE = 2000;
+	final double INTAKE_REVERSE =  2000;
 	
 	//Shooter speeds
-	final double SHOOTER_FAST	= 2000;
-	final double SHOOTER_SLOW	= 1500;
-	final double SHOOTER_INTAKE	= -2000;
+	final double SHOOTER_FAST	= -380;
+	final double SHOOTER_SLOW	= -360;
+	final double SHOOTER_INTAKE	=  360;
 
     public void robotInit()
     {
@@ -107,23 +106,23 @@ public class Robot extends IterativeRobot
         /**
          * This function is called periodically during operator control
          */
-    	ArcadeDrive();
+    	arcadeDrive();
     	
     	//Arm
     	if(m_RobotInterface.GetOperatorButton(1))
     	{
-    		ManualArmControl();
+    		manualArmControl();
     	}
     	else
     	{
-    		ArmSetpoints();
+    		armSetpoints();
     	}
 
     	//Intake
-    	Intake();
+    	intake();
     	
     	//Shooter
-    	
+    	shoot();
     	
     	//Update Dashboard Variables
     	UpdateSmartDashboard();
@@ -139,18 +138,18 @@ public class Robot extends IterativeRobot
          */
     }
     //Drivetrain
-    public void ArcadeDrive()
+    public void arcadeDrive()
     {
     	m_DriveTrain.arcadeDrive(m_RobotInterface.GetDriverLeftY(), m_RobotInterface.GetDriverRightX());
     }
     
     //Arm
-    public void ManualArmControl() 
+    public void manualArmControl() 
     {
     	m_Arm.DisablePID();
         m_Arm.SetTalonOutput(-m_RobotInterface.GetOperatorJoystick().getRawAxis(1));
     }
-    public void ArmSetpoints() 
+    public void armSetpoints() 
     {	
     	if(!m_Arm.isPIDEnabled())
     	{
@@ -175,7 +174,7 @@ public class Robot extends IterativeRobot
     }
     
     //Intake
-    public void Intake()
+    public void intake()
     {
 	    if(m_RobotInterface.GetOperatorButton(8))
 		{
@@ -220,7 +219,7 @@ public class Robot extends IterativeRobot
     }
     
     //Shooter
-    public void ShootFast()
+    public void shoot()
     {
     	if(m_RobotInterface.GetOperatorButton(3))
     	{
@@ -251,8 +250,8 @@ public class Robot extends IterativeRobot
     	}
     }
     
-    //Shoot aim | this code uses limit switches may want to revisit this and use PID control
-    public void ShooterAim()
+    //Shooter Aim | this code uses limit switches may want to revisit this and use PID control
+    public void shooterAim()
     {
     	boolean buttonPressed = false;
     	

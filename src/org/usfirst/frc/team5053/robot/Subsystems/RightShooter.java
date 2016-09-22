@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.Talon;
 
 public class RightShooter implements Subsystem{
@@ -15,6 +16,7 @@ public class RightShooter implements Subsystem{
 	public RightShooter(Talon shooterTalon, Encoder shooterEncoder) {
 		m_Shooter = shooterTalon;
 		m_Encoder = shooterEncoder;
+		m_Encoder.setPIDSourceType(PIDSourceType.kRate);
 		m_PID = new PIDController(0.001, 5.0E-4, 0.0, m_Encoder, m_Shooter);
 	}
 	
