@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.SpeedController;
 /**
@@ -26,6 +28,8 @@ public class DriveTrain extends RobotDrive implements Subsystem
 	
 	private ADXRS450_Gyro m_Gyro;
 	
+	private PIDController m_PID;
+	
 	public DriveTrain(SpeedController leftMotor, SpeedController rightMotor) 
 	{
 		super(leftMotor, rightMotor);
@@ -45,10 +49,8 @@ public class DriveTrain extends RobotDrive implements Subsystem
 		m_LeftEncoder = leftEncoder;
 		m_RightEncoder = rightEncoder;
 		
-		
 		m_LeftMotor.setInverted(true);
 		m_RightMotor.setInverted(true);
-		
 	}
 	public DriveTrain(SpeedController leftMotor, SpeedController rightMotor, Encoder leftEncoder, Encoder rightEncoder, ADXRS450_Gyro Gyro)
 	{
@@ -57,14 +59,23 @@ public class DriveTrain extends RobotDrive implements Subsystem
 		m_LeftMotor = leftMotor;
 		m_RightMotor = rightMotor;
 		
+		m_LeftMotor.setInverted(true);
+		m_RightMotor.setInverted(true);
+		
 		m_LeftEncoder = leftEncoder;
 		m_RightEncoder = rightEncoder;
 		
 		m_Gyro = Gyro;
+		m_Gyro.setPIDSourceType(PIDSourceType.kDisplacement);
 		
-		m_LeftMotor.setInverted(true);
-		m_RightMotor.setInverted(true);
-		
+		m_PID = new PIDController(15.0, 0.05, 0.0, m_Gyro, m_LeftMotor);
+	}
+	public void rotateDriveTrain(double angle) {
+		if(angle > 360 || angle < -360)
+		{
+			double targetAngle = m_Gyro.getAngle() + angle;
+			m_PID.setSetpoint(targetAngle);
+		}
 	}
 	public HashMap<String, Double> GetDashboardData() {
 		return null;

@@ -59,7 +59,11 @@ public class Robot extends IterativeRobot
 	final double SHOOTER_FAST	= -380;
 	final double SHOOTER_SLOW	= -360;
 	final double SHOOTER_INTAKE	=  360;
-
+	
+	//shooter aim
+	boolean shooterAiming = false;
+	boolean isShooterRaised = false;
+	
     public void robotInit()
     {
         /**
@@ -82,7 +86,7 @@ public class Robot extends IterativeRobot
     	m_RightShooter = new RightShooter(m_RobotControllers.GetRightShooter(), m_RobotSensors.GetRightShooterEncoder());
     	m_Intake = new Intake(m_RobotControllers.GetIntake());
     	m_ShooterAim = new ShooterAim(m_RobotControllers.GetShooterBattery(), m_RobotSensors.GetShooterHigh(), m_RobotSensors.GetShooterLow());
-    	m_Kicker = new Kicker(m_RobotSensors.GetKickerSolenoid());
+    	m_Kicker = new Kicker(m_RobotControllers.GetKickerSolenoid());
     }
 
     public void autonomousInit() 
@@ -123,6 +127,10 @@ public class Robot extends IterativeRobot
     	
     	//Shooter
     	shoot();
+    	shooterAim();
+    	
+    	//kicker
+    	teleopKick();
     	
     	//Update Dashboard Variables
     	UpdateSmartDashboard();
@@ -227,54 +235,66 @@ public class Robot extends IterativeRobot
         	m_RightShooter.EnablePID();
         	m_LeftShooter.SetShooterSetpoint(SHOOTER_FAST);
         	m_RightShooter.SetShooterSetpoint(SHOOTER_FAST);
-        	if(m_LeftShooter.ShooterOnTarget() && m_RightShooter.ShooterOnTarget())
-        	{
-        		m_Kicker.SetSolenoidState(true);
-        	}
     	}
     	else if(m_RobotInterface.GetOperatorButton(4))
     	{
-    		m_LeftShooter.EnablePID();
-        	m_RightShooter.EnablePID();
         	m_LeftShooter.SetShooterSetpoint(SHOOTER_SLOW);
         	m_RightShooter.SetShooterSetpoint(SHOOTER_SLOW);
-        	if(m_LeftShooter.ShooterOnTarget() && m_RightShooter.ShooterOnTarget())
-        	{
-        		m_Kicker.SetSolenoidState(true);
-        	}
+    		m_LeftShooter.EnablePID();
+        	m_RightShooter.EnablePID();
     	}
     	else
     	{
+    		m_LeftShooter.DisablePID();
+    		m_RightShooter.DisablePID();
     		m_LeftShooter.SetTalonOutput(0);
     		m_RightShooter.SetTalonOutput(0);
+    	}
+    }
+    
+    public void teleopKick()
+    {
+    	if(m_RobotInterface.GetOperatorButton(2))
+    	{
+    		m_Kicker.SetSolenoidState(true);
+    		
+    	}
+    	else
+    	{
+    		m_Kicker.SetSolenoidState(false);
     	}
     }
     
     //Shooter Aim | this code uses limit switches may want to revisit this and use PID control
     public void shooterAim()
     {
-    	boolean buttonPressed = false;
     	
-    	while(m_RobotInterface.GetOperatorButton(12) || buttonPressed) {
-    		buttonPressed = true;
-    		if(m_ShooterAim.LimitSwitchLow())
+    	if(m_RobotInterface.GetOperatorButton(12) || shooterAiming) {
+    		shooterAiming = true;
+    		if(!isShooterRaised)
     		{
-    			m_ShooterAim.SetTalonOutput(.6);
+    			m_ShooterAim.SetTalonOutput(.4);
     			if(m_ShooterAim.LimitSwitchHigh()) 
     			{
     				m_ShooterAim.SetTalonOutput(0);
-    				buttonPressed = false;
+    				isShooterRaised = true;
+    				shooterAiming = false;
     			}
     		}
-    		else if(m_ShooterAim.LimitSwitchHigh()) 
+    		else 
     		{
-    			m_ShooterAim.SetTalonOutput(-.6);
+    			m_ShooterAim.SetTalonOutput(-.4);
     			if(m_ShooterAim.LimitSwitchLow()) 
     			{
     				m_ShooterAim.SetTalonOutput(0);
-    				buttonPressed = false;
+    				isShooterRaised = false;
+    				shooterAiming = false;
     			}
     		}
+    	}
+    	else
+    	{
+    		m_ShooterAim.SetTalonOutput(0);
     	}
     }
     public void UpdateSmartDashboard()

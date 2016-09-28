@@ -18,6 +18,7 @@ public class RightShooter implements Subsystem{
 		m_Encoder = shooterEncoder;
 		m_Encoder.setPIDSourceType(PIDSourceType.kRate);
 		m_PID = new PIDController(0.001, 5.0E-4, 0.0, m_Encoder, m_Shooter);
+		m_PID.setPercentTolerance(3);
 	}
 	
 	public void EnablePID() {

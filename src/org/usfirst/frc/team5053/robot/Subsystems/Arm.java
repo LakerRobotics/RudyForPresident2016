@@ -39,7 +39,7 @@ public class Arm implements Subsystem {
 		return m_StringPot.get();
 	}
 	public void SetTargetPosition(double target) {
-		if(target < .353 && target > .179)
+		if(target < .353 || target > .179)
 		{
 			m_PID.setSetpoint(target);
 		}

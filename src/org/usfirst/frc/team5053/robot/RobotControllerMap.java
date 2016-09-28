@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5053.robot;
 
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Talon;
 
 /**
@@ -32,6 +33,7 @@ public class RobotControllerMap
 	private final int armPWM = 5;
 	private final int shooterBatteryPWM = 6;
 	
+	private final int solenoidKicker = 0;
 	
 	private Talon m_LeftDrive;
 	private Talon m_RightDrive;
@@ -44,6 +46,8 @@ public class RobotControllerMap
 	private Talon m_Intake;
 	
 	private Talon m_ShooterBattery;
+	
+	private Solenoid m_Kicker;
 
 	
 	/**
@@ -63,6 +67,8 @@ public class RobotControllerMap
 		m_Intake = new Talon(intakePWM);
 		
 		m_ShooterBattery = new Talon(shooterBatteryPWM);
+		
+		m_Kicker = new Solenoid(solenoidKicker);
 		
 	}
 	
@@ -94,5 +100,7 @@ public class RobotControllerMap
 	{
 		return m_ShooterBattery;
 	}
-	
+	public Solenoid GetKickerSolenoid() {
+		return m_Kicker;
+	}
 }

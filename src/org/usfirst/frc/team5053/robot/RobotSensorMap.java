@@ -33,7 +33,6 @@ public class RobotSensorMap
 	private final int shooterLimitSwitchHighDIO = 8;
 	private final int shooterLimitSwitchLowDIO = 9;
 	
-	private final int solenoidKicker = 0;
 	private final int armStringPotentiometerAnalog = 1;
 	
 	private Encoder m_LeftDrive;
@@ -42,8 +41,7 @@ public class RobotSensorMap
 	private Encoder m_RightShooter;
 	private DigitalInput m_ShooterHigh;
 	private DigitalInput m_ShooterLow;
-	
-	private Solenoid m_Kicker;
+
 	private AnalogPotentiometer m_ArmPot;
 	private ADXRS450_Gyro m_Gyro;
 	
@@ -63,8 +61,7 @@ public class RobotSensorMap
 		
 		m_ShooterHigh = new DigitalInput(shooterLimitSwitchHighDIO);
 		m_ShooterLow = new DigitalInput(shooterLimitSwitchLowDIO);
-		
-		m_Kicker = new Solenoid(solenoidKicker);
+
 		m_ArmPot = new AnalogPotentiometer(armStringPotentiometerAnalog);
 		m_Gyro = new ADXRS450_Gyro();
 	}
@@ -86,9 +83,6 @@ public class RobotSensorMap
 	}
 	public DigitalInput GetShooterLow() {
 		return m_ShooterLow;
-	}
-	public Solenoid GetKickerSolenoid() {
-		return m_Kicker;
 	}
 	public AnalogPotentiometer GetArmPot() {
 		return m_ArmPot;
