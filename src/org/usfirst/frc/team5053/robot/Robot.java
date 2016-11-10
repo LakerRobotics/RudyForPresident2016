@@ -34,8 +34,6 @@ public class Robot extends IterativeRobot
 	RobotControllerMap m_RobotControllers;
 	RobotSensorMap m_RobotSensors;
 	
-	
-	
 	//Robot Subsystem Declaration
 	DriveTrain m_DriveTrain;
 	Arm m_Arm;
@@ -60,6 +58,8 @@ public class Robot extends IterativeRobot
 	final double SHOOTER_FAST	= 2000;
 	final double SHOOTER_SLOW	= 1500;
 	final double SHOOTER_INTAKE	= -2000;
+	
+	int m_AutoCase;
 
     public void robotInit()
     {
@@ -75,15 +75,19 @@ public class Robot extends IterativeRobot
     	m_RobotSensors = new RobotSensorMap();
     	
     	
-    	
     	//Robot Subsystem Initialization
-    	m_DriveTrain = new DriveTrain(m_RobotControllers.GetLeftDrive(), m_RobotControllers.GetRightDrive());
+    	m_DriveTrain = new DriveTrain(m_RobotControllers.GetLeftDrive(), m_RobotControllers.GetRightDrive(), m_RobotSensors.GetLeftDriveEncoder(), m_RobotSensors.GetRightDriveEncoder(), m_RobotSensors.GetGyro());
     	m_Arm = new Arm(m_RobotControllers.GetArm(), m_RobotSensors.GetArmPot());
     	m_LeftShooter = new LeftShooter(m_RobotControllers.GetLeftShooter(), m_RobotSensors.GetLeftShooterEncoder());
     	m_RightShooter = new RightShooter(m_RobotControllers.GetRightShooter(), m_RobotSensors.GetRightShooterEncoder());
     	m_Intake = new Intake(m_RobotControllers.GetIntake());
     	m_ShooterAim = new ShooterAim(m_RobotControllers.GetShooterBattery(), m_RobotSensors.GetShooterHigh(), m_RobotSensors.GetShooterLow());
     	m_Kicker = new Kicker(m_RobotSensors.GetKickerSolenoid());
+    	
+    	m_DriveTrain.ResetEncoders();
+    	m_DriveTrain.ResetAngle();
+    	
+    	m_AutoCase = 0;
     }
 
     public void autonomousInit() 
@@ -91,6 +95,9 @@ public class Robot extends IterativeRobot
     	   /**
          * This function is called once when autonomous begins
          */
+    	m_AutoCase = 0;
+    	m_DriveTrain.ResetEncoders();
+    	m_DriveTrain.ResetAngle();
     }
 
     public void autonomousPeriodic()
@@ -99,6 +106,21 @@ public class Robot extends IterativeRobot
         /**
          * This function is called periodically during autonomous
          */
+    	switch (m_AutoCase)
+    	{
+    	case 0:
+    		m_DriveTrain.SetPIDSetpoint(80, 0);
+    		m_DriveTrain.EnablePID();
+    		m_AutoCase++;
+    		break;
+    	case 1:
+    		if (m_DriveTrain.DistanceOnTarget()){
+    			m_DriveTrain.DisablePID();
+    			m_AutoCase++;
+    		}
+    		break;
+    	}
+    	
     }
 
 
