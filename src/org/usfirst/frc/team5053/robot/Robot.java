@@ -106,10 +106,15 @@ public class Robot extends IterativeRobot
         /**
          * This function is called periodically during autonomous
          */
+    	AutonDriveStraightDistance(80);
+    	
+    }
+    public void AutonDriveStraightDistance(double distance)
+    {
     	switch (m_AutoCase)
     	{
     	case 0:
-    		m_DriveTrain.SetPIDSetpoint(80, 0);
+    		m_DriveTrain.SetPIDSetpoint(distance, 0);
     		m_DriveTrain.EnablePID();
     		m_AutoCase++;
     		break;
@@ -120,7 +125,6 @@ public class Robot extends IterativeRobot
     		}
     		break;
     	}
-    	
     }
 
 
